@@ -10,6 +10,9 @@ pkgs --update
 
 ## 将根文件系统编译进内核
 
+`备注`：省略此步骤任然可以观察到内核启动，且能执行其他文件系统(自己挂载SD卡)中的静态编译程序。
+如果不想自己制作也可以解压`prebuild/cromfs_data.zip`到`applications`目录中，然后编译内核即可。
+
 为了方便测试，这里将根文件系统制作成CROMFS格式转换成C代码编译进内核。
 
 1. 在 https://github.com/RT-Thread/userapps 页面下载riscv64预编译镜像
