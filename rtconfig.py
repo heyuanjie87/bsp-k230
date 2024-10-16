@@ -22,7 +22,13 @@ else:
 
 EXEC_PATH = autoenvsave.getenv('RTT_EXEC_PATH', EXEC_PATH)
 
-BUILD = 'debug'
+if ARGUMENTS.get('debug', 1):
+    BUILD = 'debug'
+else:
+    BUILD = 'release'
+
+MARCH = ARGUMENTS.get('march', 'rv64imafdc')
+MABI = ARGUMENTS.get('mabi', 'lp64')
 
 if PLATFORM == 'gcc':
     # toolchains
@@ -38,7 +44,7 @@ if PLATFORM == 'gcc':
     OBJDUMP = PREFIX + 'objdump'
     OBJCPY  = PREFIX + 'objcopy'
 
-    DEVICE  = ' -mcmodel=medany -march=rv64imafdc -mabi=lp64'
+    DEVICE  = fr' -mcmodel=medany -march={MARCH} -mabi={MABI}'
     CFLAGS  = DEVICE + ' -Wno-cpp -fvar-tracking -ffreestanding -fno-common -ffunction-sections -fdata-sections -fstrict-volatile-bitfields -D_POSIX_SOURCE '
     AFLAGS  = ' -c' + DEVICE + ' -x assembler-with-cpp -D__ASSEMBLY__'
     LFLAGS  = DEVICE + ' -nostartfiles -Wl,--gc-sections,-Map=rtthread.map,-cref,-u,_start -T link.lds' + ' -lsupc++ -lgcc -static'
@@ -46,7 +52,7 @@ if PLATFORM == 'gcc':
     LPATH   = ''
 
     if BUILD == 'debug':
-        CFLAGS += ' -O2 -g -gdwarf-2'
+        CFLAGS += ' -O0 -g -gdwarf-2'
         AFLAGS += ' -g -gdwarf-2'
     else:
         CFLAGS += ' -O2 -g -gdwarf-2'
