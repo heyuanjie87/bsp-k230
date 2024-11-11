@@ -42,6 +42,7 @@
 #define RT_USING_EVENT
 #define RT_USING_MAILBOX
 #define RT_USING_MESSAGEQUEUE
+#define RT_USING_MESSAGEQUEUE_PRIORITY
 /* end of Inter-Thread communication */
 
 /* Memory Management */
@@ -54,7 +55,6 @@
 /* end of Memory Management */
 #define RT_USING_DEVICE
 #define RT_USING_DEVICE_OPS
-#define RT_USING_SCHED_THREAD_CTX
 #define RT_USING_CONSOLE
 #define RT_CONSOLEBUF_SIZE 256
 #define RT_CONSOLE_DEVICE_NAME "uart"
@@ -121,6 +121,7 @@
 #define RT_USING_DFS_PTYFS
 #define RT_USING_DFS_CROMFS
 #define RT_USING_DFS_TMPFS
+#define RT_USING_DFS_MQUEUE
 #define RT_USING_PAGECACHE
 
 /* page cache config */
@@ -136,6 +137,7 @@
 
 /* Device Drivers */
 
+#define RT_USING_DEV_BUS
 #define RT_USING_DEVICE_IPC
 #define RT_UNAMED_PIPE_NUMBER 64
 #define RT_USING_SYSTEM_WORKQUEUE
@@ -193,6 +195,7 @@
 
 /* Interprocess Communication (IPC) */
 
+#define RT_USING_POSIX_MESSAGE_QUEUE
 
 /* Socket is in the 'Network' category */
 
