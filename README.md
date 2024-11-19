@@ -1,5 +1,9 @@
 # rt-smart canaan porting
 
+## 测试过的板子
+
+- K230-evb
+
 ## 下载依赖的软件包
 
 在软件包无需变更的情况下只须执行一次
@@ -31,8 +35,9 @@ sudo mount ext4.img dir
 ```
 3. 删除其中一些不必要的文件以减小内核体积
 ```
+cd dir
 du -ha                              # 查看文件大小
-sudo rm -rf dir/www dir/usr/share/fonts dir/tc
+sudo rm -rf www usr/share/fonts tc
 
 ```
 4. 生成cromfs文件
@@ -76,6 +81,11 @@ export RTT_EXEC_PATH=~/.tools/gnu_gcc/riscv64-linux-musleabi_for_x86_64-pc-linux
 scons -j8 march=rv64imafdcv mabi=lp64d
 ```
 备注：使用V扩展需要使用`scons --menuconfig`开启内核对它的支持
+```
+    RT-Thread online packages  --->
+    Drivers Configuration  --->
+[*] Enable RISCV Vector
+```
 
 ## 烧录rtt_system.bin
 
@@ -95,3 +105,8 @@ fatload mmc 1:4 $ramdisk_addr rtt_system.bin;k230_boot mem $ramdisk_addr 0x$file
 ```
 
 `备注`: 随后RT-Thread启动界面显示在大核控制台。
+
+## 注意事项
+* 1. `#define KERNEL_VADDR_START 0xFFFFFFC000220000`这个地址和运行的物理地址有关，请谨慎修改。
+* 2. 确保`#define ARCH_REMAP_KERNEL`这个定义存在。
+* 3. 双系统运行时，启动设备(SD卡)被linux直接访问，默认rt-thread未开启sdio驱动，要想在rt-thread中直接访问SD卡，请开启sdio驱动后用uboot手动启动rt-thread。
