@@ -78,7 +78,7 @@ scons -j8
 ```
 export RTT_EXEC_PATH=~/.tools/gnu_gcc/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin
 
-scons -j8 march=rv64imafdcv mabi=lp64d
+scons -j8 march=rv64imafdcv mabi=lp64d all=1
 ```
 备注：使用V扩展需要使用`scons --menuconfig`开启内核对它的支持
 ```
@@ -107,6 +107,6 @@ fatload mmc 1:4 $ramdisk_addr rtt_system.bin;k230_boot mem $ramdisk_addr 0x$file
 `备注`: 随后RT-Thread启动界面显示在大核控制台。
 
 ## 注意事项
-* 1. `#define KERNEL_VADDR_START 0xFFFFFFC000220000`这个地址和运行的物理地址有关，请谨慎修改。
+* 1. `#define KERNEL_VADDR_START 0xFFFFFFC000220000`这个地址和运行的物理地址有关，修改需谨慎。
 * 2. 确保`#define ARCH_REMAP_KERNEL`这个定义存在。
 * 3. 双系统运行时，启动设备(SD卡)被linux直接访问，默认rt-thread未开启sdio驱动，要想在rt-thread中直接访问SD卡，请开启sdio驱动后用uboot手动启动rt-thread。
