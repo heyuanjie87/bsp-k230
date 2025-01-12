@@ -22,6 +22,28 @@ static int mnt_cromfs(void)
     return ret;
 }
 
+static int mnt_fat(const char *path)
+{
+    int ret = -1;
+
+#ifdef BSP_SD_SDIO_DEV
+    while (mmcsd_wait_cd_changed(100) != MMCSD_HOST_PLUGED)
+        ;
+
+    ret = dfs_mount(BSP_SD_MNT_DEVNAME, path, "elm", 0, 0);
+    if (ret != 0)
+    {
+        rt_kprintf("Dir /mnt mount failed!\n");
+    }
+    else
+    {
+        rt_kprintf("file system initialization done!\n");
+    }
+#endif
+
+    return ret;
+}
+
 int mnt_init(void)
 {
     rt_err_t ret;
@@ -30,6 +52,8 @@ int mnt_init(void)
     if (ret != RT_EOK)
     {
         rt_kprintf("CromFS mount failed!\n");
+
+        mnt_fat("/");
         return ret;
     }
 
@@ -40,19 +64,9 @@ int mnt_init(void)
         rt_kprintf("Dir /dev/shm mount failed!\n");
     }
 
-#ifdef BSP_SD_SDIO_DEV
-    while (mmcsd_wait_cd_changed(100) != MMCSD_HOST_PLUGED)
-        ;
+    ret = mnt_fat("/mnt");
 
-    if (dfs_mount(BSP_SD_MNT_DEVNAME, "/mnt", "elm", 0, 0) != 0)
-    {
-        rt_kprintf("Dir /mnt mount failed!\n");
-    }
-#endif
-
-    rt_kprintf("file system initialization done!\n");
-
-    return 0;
+    return ret;
 }
 INIT_ENV_EXPORT(mnt_init);
 #endif
