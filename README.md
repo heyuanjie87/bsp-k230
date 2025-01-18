@@ -104,6 +104,14 @@ fatload mmc 1:4 $ramdisk_addr rtt_system.bin;k230_boot mem $ramdisk_addr 0x$file
 
 ```
 
+存为环境变量,可使用`run rtt`启动
+```
+setenv rtt 'fatload mmc 1:4 $ramdisk_addr rtt_system.bin;k230_boot mem $ramdisk_addr 0x$filesize'
+saveenv
+
+```
+
+
 `备注`: 随后RT-Thread启动界面显示在大核控制台。
 
 ## 注意事项
