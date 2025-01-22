@@ -132,6 +132,8 @@
 #define KERNEL_VADDR_START 0xFFFFFFC000220000
 #define ARCH_RISCV
 #define ARCH_RISCV_FPU
+#define ARCH_RISCV_VECTOR
+#define ARCH_VECTOR_VLEN_128
 #define ARCH_RISCV_FPU_D
 #define ARCH_RISCV64
 #define ARCH_USING_NEW_CTX_SWITCH
@@ -267,6 +269,8 @@
 
 /* Interprocess Communication (IPC) */
 
+#define RT_USING_POSIX_PIPE
+#define RT_USING_POSIX_PIPE_SIZE 512
 #define RT_USING_POSIX_MESSAGE_QUEUE
 
 /* Socket is in the 'Network' category */
@@ -354,6 +358,7 @@
 #define RT_USING_LWP
 #define LWP_DEBUG
 #define LWP_DEBUG_INIT
+#define LWP_USING_RUNTIME
 #define RT_LWP_MAX_NR 30
 #define LWP_TASK_STACK_SIZE 16384
 #define RT_CH_MSG_MAX_NR 1024
@@ -557,6 +562,10 @@
 
 /* Drivers Configuration */
 
+#define BSP_USING_SDIO
+#define BSP_USING_SDIO1
+#define BSP_SD_SDIO_DEV 1
+#define BSP_SD_MNT_DEVNAME "sd1p3"
 /* end of Drivers Configuration */
 #define BOARD_fpgac908
 #define __STACKSIZE__ 8192
