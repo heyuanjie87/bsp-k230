@@ -44,6 +44,16 @@ static int mnt_fat(const char *path)
     return ret;
 }
 
+static void mnt_shm(void)
+{
+    mkdir("/dev/shm", 0x777);
+
+    if (dfs_mount(RT_NULL, "/dev/shm", "tmp", 0, 0) != 0)
+    {
+        rt_kprintf("Dir /dev/shm mount failed!\n");
+    } 
+}
+
 int mnt_init(void)
 {
     rt_err_t ret;
@@ -53,18 +63,14 @@ int mnt_init(void)
     {
         rt_kprintf("CromFS mount failed!\n");
 
-        mnt_fat("/");
-        return ret;
+        ret = mnt_fat("/");
     }
-
-    mkdir("/dev/shm", 0x777);
-
-    if (dfs_mount(RT_NULL, "/dev/shm", "tmp", 0, 0) != 0)
+    else
     {
-        rt_kprintf("Dir /dev/shm mount failed!\n");
+        ret = mnt_fat("/mnt");
     }
 
-    ret = mnt_fat("/mnt");
+    mnt_shm();
 
     return ret;
 }
