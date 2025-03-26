@@ -17,7 +17,7 @@ pkgs --update
 通用版(rv64imafdc-lp64):
 https://download.rt-thread.org/download/rt-smart/toolchains/riscv64gc-linux-musleabi_for_x86_64-pc-linux-gnu_222725-8a397096c1.tar.bz2
 
-V指令版(rv64imafdcv-lp64d):
+V指令版(rv64imafdcv-lp64d,此版本只能编译内核不可编译应用):
 https://download.rt-thread.org/rt-smart/riscv64/riscv64-unknown-linux-musl-rv64imafdcv-lp64d-20230608.tar.bz2
 
 
@@ -46,7 +46,7 @@ sudo rm -rf www usr/share/fonts tc
 sudo ./cromfs-tool-x64 dir crom.img ./            # 将生成的cromfs_data.c放入applications目录
 ```
 
-## 编译
+## 编译(生成rtt_system.bin)
 
 ### 一步完成
 ```
@@ -98,7 +98,7 @@ ifconfig eth0 up;ifconfig eth0 192.168.2.2;cd /tmp;tftp -r rtt_system.bin -g 192
 
 ## 用uboot从sd卡fat分区加载rtt_system.bin
 
-在`快起`特性关闭的情况下，从小核控制台进入uboot操作界面，输入如下命令：
+烧录官方镜像后，在`快起`特性关闭的情况下，从小核控制台进入uboot操作界面，输入如下命令：
 ```
 fatload mmc 1:4 $ramdisk_addr rtt_system.bin;k230_boot mem $ramdisk_addr 0x$filesize
 
